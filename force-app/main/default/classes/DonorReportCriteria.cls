@@ -7,13 +7,13 @@ public class DonorReportCriteria {
      * @description A list of the sections which a user can configure for the
      * donor report.
      */
-    public List<CriteriaSection> sections;
+    public List<CriteriaSection> sections {get; set;}
 
     /**
      * @description A list of the related lists which a user can configure for
      * the donor report.
      */
-    public List<CriteriaRelatedList> relatedLists;
+    public List<CriteriaRelatedList> relatedLists {get; set;}
 
     /**
      * @description A representation of the configuration options for a detail
@@ -24,19 +24,19 @@ public class DonorReportCriteria {
         /**
          * @description The display label of this detail section
          */
-        public String label;
+        public String label {get; set;}
 
         /**
          * @description Has this section been selected for inclusion in the
          * donor report?
          */
-        public Boolean isSelected;
+        public Boolean isSelected {get; set;}
 
         /**
          * @description A list of the fields within this detail section, and
          * whether those fields have been selected for inclusion in the report.
          */
-        public List<CriteriaField> fields;
+        public List<CriteriaField> fields {get; set;}
     }
 
     /**
@@ -46,15 +46,19 @@ public class DonorReportCriteria {
      */
     public class CriteriaField {
         /**
-         * @description The field to be included, including the label, field
-         * name, etc.
+         * @description The display label of the SObject field
          */
-        public Schema.DescribeFieldResult field;
+        public String label {get; set;}
+
+        /**
+         * @description The API name of this field
+         */
+        public String fieldName {get; set;}
 
         /**
          * @description Is this field selected for inclusion in the report?
          */
-        public Boolean isSelected;
+        public Boolean isSelected {get; set;}
     }
 
     /**
@@ -67,66 +71,72 @@ public class DonorReportCriteria {
      */
     public class CriteriaRelatedList {
         /**
-         * @description Which relationships does this represent?
+         * @description The plural name of the child object of this
+         * relationship
          */
-        public Schema.ChildRelationship relationship;
+        public String objectName {get; set;}
+
+        /**
+         * The relationship name, from the perspective of the parent object
+         */
+        public String relationshipName {get; set;}
 
         /**
          * @description How many rows should be displayed in the report.
          */
-        public Integer rowLimit;
+        public Integer rowLimit {get; set;}
 
         /**
          * @description Which record types should the related records be
          * limited to?
          */
-        public List<String> recordTypes;
+        public List<String> recordTypes {get; set;}
 
         /**
          * @description What record types are available for filtering?
          */
-        public List<SelectOption> recordTypeOptions;
+        public List<SelectOption> recordTypeOptions {get; set;}
 
         /**
          * @description The start of the date range to limit the related
          * records to
          */
-        public DateTime dateFilterStart;
+        public DateTime dateFilterStart {get; set;}
 
         /**
          * @description The end of the date range to limit the related records to
          */
-        public DateTime dateFilterEnd;
+        public DateTime dateFilterEnd {get; set;}
 
         /**
          * @description The field on the related object to use for date filtering
          */
-        public Schema.DescribeFieldResult dateFilterField;
+        public SObjectFieldWrapper dateFilterField {get; set;}
 
         /**
          * @description What date/time fields are available for filtering?
          */
-        public List<SelectOption> dateFilterOptions;
+        public List<SelectOption> dateFilterOptions {get; set;}
 
         /**
          * @description Which field should we sort the related records by?
          */
-        public Schema.DescribeFieldResult sortField;
+        public SObjectFieldWrapper sortField {get; set;}
 
         /**
          * @description Which fields are available for sorting by?
          */
-        public List<SelectOption> sortFieldOptions;
+        public List<SelectOption> sortFieldOptions {get; set;}
 
         /**
          * @description In which order should we sort the related records? ASC
          * or DESC.
          */
-        public String sortOrder;
+        public String sortOrder {get; set;}
 
         /**
          * @description Which fields are to be included in the related list.
          */
-        public List<CriteriaField> fields;
+        public List<CriteriaField> fields {get; set;}
     }
 }
