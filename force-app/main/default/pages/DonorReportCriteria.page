@@ -1,0 +1,208 @@
+<apex:page controller="DonorReportController" docType="html-5.0">
+    <apex:form>
+
+        <h1 class="slds-text-heading_large slds-text-align_center slds-m-vertical_medium">
+            Choose Criteria for Donor Report
+        </h1>
+
+        <!-- @todo add some instruction text for this form? -->
+
+        <h2 class="slds-text-title_caps slds-m-vertical_medium">Detail Sections</h2>
+
+        <apex:repeat value="{!criteria.sections}" var="section">
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <div class="slds-form-element slds-p-horizontal_medium">
+                        <label class="slds-checkbox_toggle">
+                            <apex:inputCheckbox value="{!section.isSelected}"/>
+                            <span class="slds-checkbox_faux_container" aria-live="assertive">
+                                <span class="slds-checkbox_faux"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <span class="slds-truncate slds-p-horizontal_small" title="{!section.label}">
+                        <apex:outputText value="{!section.label}"/>
+                    </span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content slds-p-around_large">
+
+                    <fieldset class="slds-form-element">
+                        <legend class="slds-form-element__legend slds-form-element__label">Selected Fields</legend>
+                        <div class="slds-form-element__control">
+                            <apex:repeat value="{!section.fields}" var="field">
+                                <span class="slds-checkbox">
+                                    <apex:inputCheckbox id="checkbox" value="{!field.isSelected}"/>
+                                    <label class="slds-checkbox__label" for="{!$Component.checkbox}">
+                                        <span class="slds-checkbox_faux"></span>
+                                        <span class="slds-form-element__label">
+                                            <apex:outputText value="{!field.label}"/>
+                                        </span>
+                                    </label>
+                                </span>
+                            </apex:repeat>
+                        </div>
+                    </fieldset>
+
+                </div>
+            </div>
+        </apex:repeat>
+
+        <h2 class="slds-text-title_caps slds-m-vertical_medium">Related Lists</h2>
+
+        <apex:repeat value="{!criteria.relatedLists}" var="relatedList">
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <div class="slds-form-element slds-p-horizontal_medium">
+                        <label class="slds-checkbox_toggle slds-grid">
+                            <apex:inputCheckbox value="{!relatedList.isSelected}"/>
+                            <span class="slds-checkbox_faux_container" aria-live="assertive">
+                                <span class="slds-checkbox_faux"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <span class="slds-truncate slds-p-horizontal_small" title="{!relatedList.relationshipName}">
+                        <apex:outputText value="{!relatedList.relationshipName}"/>
+                    </span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content slds-p-around_large slds-grid slds-grid_pull-padded-medium slds-wrap">
+                    <div class="slds-col slds-p-around_medium slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__legend slds-form-element__label">Selected Fields</legend>
+                            <div class="slds-form-element__control">
+                                <apex:repeat value="{!relatedList.fields}" var="field">
+                                    <span class="slds-checkbox">
+                                        <apex:inputCheckbox id="checkbox" value="{!field.isSelected}"/>
+                                        <label class="slds-checkbox__label" for="{!$Component.checkbox}">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label">
+                                                <apex:outputText value="{!field.label}"/>
+                                            </span>
+                                        </label>
+                                    </span>
+                                </apex:repeat>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="slds-col slds-p-around_medium slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">
+                        <div class="slds-form slds-form_stacked">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="{!$Component.rowLimit}">
+                                    Number of records to include in report
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <apex:input
+                                        id="rowLimit"
+                                        type="text"
+                                        styleClass="slds-input"
+                                        value="{!relatedList.rowLimit}"/>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="{!$Component.sortField}">
+                                    Sort results by
+                                </label>
+                                <div class="slds-select_container">
+                                    <div class="slds-form-element__control">
+                                        <apex:selectList
+                                            id="sortField"
+                                            styleClass="slds-select"
+                                            size="1"
+                                            multiselect="false"
+                                            value="{!relatedList.sortField}">
+                                            <apex:selectOptions value="{!relatedList.sortFieldOptions}"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="{!$Component.sortOrder}">
+                                    Sort result order
+                                </label>
+                                <div class="slds-select_container">
+                                    <div class="slds-form-element__control">
+                                        <apex:selectList
+                                            id="sortOrder"
+                                            styleClass="slds-select"
+                                            size="1"
+                                            multiselect="false"
+                                            value="{!relatedList.sortOrder}">
+                                            <apex:selectOption itemValue="ASC" itemLabel="Ascending"/>
+                                            <apex:selectOption itemValue="DESC" itemLabel="Descending"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-p-around_medium slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">
+                        <div class="slds-form slds-form_stacked">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="{!$Component.dateFilterField}">
+                                    Filter date range field
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <apex:selectList
+                                            id="dateFilterField"
+                                            styleClass="slds-select"
+                                            size="1"
+                                            multiselect="false"
+                                            value="{!relatedList.dateFilterField}">
+                                            <apex:selectOptions value="{!relatedList.dateFilterOptions}"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="{!$Component.dateFilterStart}">
+                                    Date range filter start date
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <apex:input
+                                        id="dateFilterStart"
+                                        type="date"
+                                        styleClass="slds-input"
+                                        value="{!relatedList.dateFilterStart}"/>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="{!$Component.dateFilterEnd}">
+                                    Date range filter end date
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <apex:input
+                                        id="dateFilterEnd"
+                                        type="date"
+                                        styleClass="slds-input"
+                                        value="{!relatedList.dateFilterEnd}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-p-around_medium slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">
+                        <div class="slds-form slds-form_stacked">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="{!$Component.recordTypes}">
+                                    Record types to include in report
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <apex:selectList
+                                            id="recordTypes"
+                                            multiselect="true"
+                                            styleClass="slds-select"
+                                            size="3"
+                                            style="padding: 0"
+                                            value="{!relatedList.recordTypes}">
+                                            <apex:selectOptions value="{!relatedList.recordTypeOptions}"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </apex:repeat>
+    </apex:form>
+</apex:page>

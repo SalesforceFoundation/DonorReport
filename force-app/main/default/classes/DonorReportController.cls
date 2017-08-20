@@ -70,8 +70,8 @@ public with sharing class DonorReportController {
         relatedList1.recordTypeOptions.add(new SelectOption('Bar', 'Bar RT'));
         relatedList1.recordTypeOptions.add(new SelectOption('Quux', 'Quux RT'));
 
-        relatedList1.dateFilterStart = DateTime.now();
-        relatedList1.dateFilterEnd = DateTime.now();
+        relatedList1.dateFilterStart = Date.today();
+        relatedList1.dateFilterEnd = Date.today();
         relatedList1.dateFilterField = new SObjectFieldWrapper(Contact.CreatedDate);
 
         relatedList1.dateFilterOptions = new List<SelectOption>();

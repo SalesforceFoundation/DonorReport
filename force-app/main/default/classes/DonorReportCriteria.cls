@@ -82,6 +82,12 @@ public class DonorReportCriteria {
         public String relationshipName {get; set;}
 
         /**
+         * @description Has this related list been selected for inclusion in
+         * the donor report?
+         */
+        public Boolean isSelected {get; set;}
+
+        /**
          * @description How many rows should be displayed in the report.
          */
         public Integer rowLimit {get; set;}
@@ -101,12 +107,12 @@ public class DonorReportCriteria {
          * @description The start of the date range to limit the related
          * records to
          */
-        public DateTime dateFilterStart {get; set;}
+        public Date dateFilterStart {get; set;}
 
         /**
          * @description The end of the date range to limit the related records to
          */
-        public DateTime dateFilterEnd {get; set;}
+        public Date dateFilterEnd {get; set;}
 
         /**
          * @description The field on the related object to use for date filtering

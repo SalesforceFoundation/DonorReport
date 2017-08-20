@@ -1,52 +1,53 @@
-<apex:page controller="DonorReportController" showHeader="true" sidebar="true" readOnly="true">
+<apex:page controller="DonorReportController" showHeader="true" sidebar="true" readOnly="true" docType="html-5.0">
     <apex:slds/>
 
     <div class="slds-scope">
-        <apex:form>
-            <h1>Detail Sections</h1>
-            <apex:repeat value="{!criteria.sections}" var="section">
-                <div class="slds-section slds-is-open">
-                    <h3 class="slds-section__title slds-theme_shade">
-                        <div class="slds-form-element slds-p-horizontal_medium">
-                            <label class="slds-checkbox_toggle">
-                                <apex:inputCheckbox value="{!section.isSelected}"/>
-                                <span class="slds-checkbox_faux_container" aria-live="assertive">
-                                    <span class="slds-checkbox_faux"></span>
+        <div class="slds-page-header">
+            <h1 class="slds-page-header__title slds-truncate slds-align-middle">
+                Donor Report Builder
+            </h1>
+        </div>
+
+        <div class="slds-grid">
+            <div class="slds-container_fluid slds-p-around_large">
+                <div class="slds-progress">
+                    <ol class="slds-progress__list">
+                        <li class="slds-progress__item slds-is-completed">
+                            <button class="slds-button slds-button_icon slds-button_icon slds-progress__marker slds-progress__marker_icon">
+                                <svg class="slds-button__icon" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}"></use>
+                                </svg>
+                                <span class="slds-assistive-text">
+                                    Choose Layout - Completed
                                 </span>
-                            </label>
-                        </div>
-                        <span class="slds-truncate slds-p-horizontal_small" title="{!section.label}">
-                            <apex:outputText value="{!section.label}"/>
+                            </button>
+                        </li>
+                        <li class="slds-progress__item slds-is-active">
+                            <button class="slds-button slds-progress__marker">
+                                <span class="slds-assistive-text">
+                                    Choose Criteria - Active
+                                </span>
+                            </button>
+                        </li>
+                        <li class="slds-progress__item">
+                            <button class="slds-button slds-progress__marker">
+                                <span class="slds-assistive-text">
+                                    Generate Report
+                                </span>
+                            </button>
+                        </li>
+                    </ol>
+
+                    <div class="slds-progress-bar slds-progress-bar_x-small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" role="progressbar">
+                        <span class="slds-progress-bar__value" style="width: 50%">
+                            <span class="slds-assistive-text">Progress: 1 out of 2 steps completed</span>
                         </span>
-                    </h3>
-                    <div aria-hidden="false" class="slds-section__content slds-p-around_large">
-
-                        <fieldset class="slds-form-element">
-                            <legend class="slds-form-element__legend slds-form-element__label">Selected Fields</legend>
-                            <div class="slds-form-element__control">
-                                <apex:repeat value="{!section.fields}" var="field">
-                                    <span class="slds-checkbox">
-                                        <apex:inputCheckbox id="checkbox" value="{!field.isSelected}"/>
-                                        <label class="slds-checkbox__label" for="{!$Component.checkbox}">
-                                            <span class="slds-checkbox_faux"></span>
-                                            <span class="slds-form-element__label">
-                                                <apex:outputText value="{!field.label}"/>
-                                            </span>
-                                        </label>
-                                    </span>
-                                </apex:repeat>
-                            </div>
-                        </fieldset>
-
                     </div>
                 </div>
-            </apex:repeat>
 
-            <h2>Related Lists</h2>
-            <apex:repeat value="{!criteria.relatedLists}" var="relatedList">
+                <apex:include pageName="DonorReportCriteria"/>
 
-            </apex:repeat>
-        </apex:form>
-
+            </div>
+        </div>
     </div>
 </apex:page>
